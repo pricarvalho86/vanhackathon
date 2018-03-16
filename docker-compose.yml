@@ -1,6 +1,6 @@
-version: "2"
-services:
+version: "3.1"
 
+services:
   db:
       image: mysql
       ports:
@@ -9,20 +9,3 @@ services:
         - MYSQL_DATABASE=vanhackathon
         - MYSQL_ROOT_PASSWORD=root
         - MYSQL_PASSWORD=root
-
-  vanhackathon:
-    build:
-      context: .
-   # image: springio/gs-spring-boot-docker
-    links:
-      - db:db
-    ports:
-      - 8080:8080
-    environment:
-      - DATABASE_HOST=db
-      - DATABASE_PORT=3306
-      - DATABASE_NAME=vanhackathon
-      - DATABASE_USER=root
-      - DATABASE_PASSWORD=root
-    depends_on:
-      - db
