@@ -1,12 +1,13 @@
 package com.skipthedishes.vanhackathon.store;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.skipthedishes.vanhackathon.product.Product;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
-public class Store {
+public class Store implements Serializable {
 
     @Id
     @GeneratedValue
@@ -14,4 +15,15 @@ public class Store {
 
     @Column(nullable = false)
     private String name;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "productId",  referencedColumnName = "id")
+    private List<Product> products;
+
+    @Deprecated
+    protected Store() {}
+
+    public Store(String name) {
+        this.name = name;
+    }
 }

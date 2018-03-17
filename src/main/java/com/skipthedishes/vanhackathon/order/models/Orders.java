@@ -6,12 +6,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Order implements Serializable {
+public class Orders implements Serializable {
 
     @Id
     @GeneratedValue
@@ -30,11 +29,22 @@ public class Order implements Serializable {
     @UpdateTimestamp
     private Date lastUpdate;
 
+    @ManyToOne
     private Store store;
-    private Customer customer;
-    private List<OrderItem> items;
 
-    public Order(String deliveryAddress, String contact, String status, Store store, Customer customer, List<OrderItem> items) {
+    @ManyToOne
+    private Customer customer;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="order_item",
+            joinColumns={@JoinColumn(name="order_id",referencedColumnName="id")},
+            inverseJoinColumns={@JoinColumn(name="item_id", referencedColumnName="id")})
+    private List<Item> items;
+
+    @Deprecated
+    protected Orders() {}
+
+    public Orders(String deliveryAddress, String contact, String status, Store store, Customer customer, List<Item> items) {
         this.deliveryAddress = deliveryAddress;
         this.contact = contact;
         this.status = status;

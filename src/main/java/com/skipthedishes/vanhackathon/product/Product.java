@@ -2,10 +2,7 @@ package com.skipthedishes.vanhackathon.product;
 
 import com.skipthedishes.vanhackathon.store.Store;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -24,6 +21,7 @@ public class Product implements Serializable {
     @Column(nullable = false)
     private Double price;
 
+    @ManyToOne
     private Store store;
 
     @Deprecated
