@@ -1,6 +1,5 @@
 package com.skipthedishes.vanhackathon.hellos;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
