@@ -12,19 +12,16 @@ public class CousineResource {
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<String> list() {
-//        Person person = service.create(new Person(name));
         return ResponseEntity.ok().body("Get cousines ");
     }
 
     @RequestMapping(value = "/search/{searchText}", method = RequestMethod.GET)
     public ResponseEntity<String> search(@PathVariable("searchText") String searchText) {
-//        Person person = service.create(new Person(name));
         return ResponseEntity.ok().body("Searching " +searchText );
     }
 
     @RequestMapping(value = "/{cousineId}/stores", method = RequestMethod.GET)
     public ResponseEntity<String> stores(@PathVariable("cousineId") String cousineId) {
-//        Person person = service.create(new Person(name));
         return ResponseEntity.ok().body("Stores from "+cousineId);
     }
 
