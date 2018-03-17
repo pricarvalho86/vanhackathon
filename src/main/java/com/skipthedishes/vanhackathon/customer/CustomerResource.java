@@ -15,14 +15,14 @@ public class CustomerResource {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<String> register(@RequestBody CustomerCreateRequest request) {
-        return ResponseEntity.ok().body("Get cousines ");
+        return ResponseEntity.ok().body("Registering customer "+request.getName());
     }
 
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
     public ResponseEntity<String> authenticate(@RequestBody CustomerAuthenticationRequest request) {
         //TODO RETURN A TOKEN
         try {
-            return ResponseEntity.created(new URI("/sucess")).body("Deu bom!");
+            return ResponseEntity.created(new URI("/success")).body("Authentication success to "+request.getEmail());
         } catch (URISyntaxException e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();
