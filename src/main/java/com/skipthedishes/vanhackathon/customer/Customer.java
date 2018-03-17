@@ -3,10 +3,11 @@ package com.skipthedishes.vanhackathon.customer;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-public class Customer {
+public class Customer implements Serializable {
 
     @Id
     @GeneratedValue
@@ -32,7 +33,7 @@ public class Customer {
     @Deprecated
     protected Customer(){}
 
-    public Customer(String email, String name, String address, String password){
+    public Customer (String email, String name, String address, String password) {
         this.email = email;
         this.name = name;
         this.address = address;
