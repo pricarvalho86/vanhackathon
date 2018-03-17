@@ -18,4 +18,8 @@ public class CustomerCreateRequest {
     public String getName() {
         return name;
     }
+
+    public Customer toCustomer() {
+        return new Customer(email, name, address, password);
+    }
 }

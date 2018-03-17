@@ -1,5 +1,6 @@
 package com.skipthedishes.vanhackathon.customer;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,9 +14,17 @@ import java.net.URISyntaxException;
 @RequestMapping("/api/v1/Customer")
 public class CustomerResource {
 
+    private CustomerService service;
+
+    @Autowired
+    public CustomerResource(CustomerService service) {
+        this.service = service;
+    }
+
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<String> register(@RequestBody CustomerCreateRequest request) {
-        return ResponseEntity.ok().body("Registering customer "+request.getName());
+    public ResponseEntity<Customer> register(@RequestBody CustomerCreateRequest request) {
+        Customer customer = service.save(request.toCustomer());
+        return ResponseEntity.ok().body(customer);
     }
 
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
