@@ -40,4 +40,27 @@ public class Customer implements Serializable {
         this.password = password;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public Date getCreation() {
+        return creation;
+    }
 }

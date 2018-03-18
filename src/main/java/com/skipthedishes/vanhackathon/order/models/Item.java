@@ -39,4 +39,5 @@ public class Item implements Serializable {
     public Double total() {
         return this.price * this.quantity ;
     }
+
 }

@@ -13,7 +13,8 @@ public class CustomerService {
         this.customers = customers;
     }
 
-    public Customer save(Customer customer) {
+    public Customer save(CustomerCreateRequest customerRequest) {
+        Customer customer = customerRequest.toCustomer();
         return customers.save(customer);
     }
 

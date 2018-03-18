@@ -1,43 +1,51 @@
 package com.skipthedishes.vanhackathon.order;
 
-//id	integer($int64)
-//date	string($date-time)
-//customerId	integer($int64)
-//deliveryAddress*	string
-//contact*	string
-//storeId*	integer($int64)
-//orderItems*	[ OrderItem{
-//                        id	integer($int64)
-//                        orderId*	integer($int64)
-//                        productId*	integer($int64)
-//                        product	Product{
-//                          id	integer($int64)
-//                          storeId	integer($int64)
-//                          name	string
-//                          description	string
-//                          price	number($double)
-//                        }
-//                        price*	number($double)
-//                        quantity*	integer($int64)
-//                        total	number($double)
-//                }]
-//total	number($double)
-//status*	string
-//lastUpdate	string($date-time)
+import com.skipthedishes.vanhackathon.customer.Customer;
+import com.skipthedishes.vanhackathon.order.models.Item;
+import com.skipthedishes.vanhackathon.order.models.Orders;
+import com.skipthedishes.vanhackathon.order.models.Status;
+import com.skipthedishes.vanhackathon.store.Store;
+
+import java.util.List;
 
 public class OrderCreateRequest {
 
     private final String contact;
-    private final Integer storeId;
-    private final String status;
-    private final Integer productId;
+    private final String deliveryAddress;
+    private final List<ItemCreateRequest> items;
 
-    public OrderCreateRequest(String contact, Integer storeId, String status, Integer productId) {
+    public OrderCreateRequest(String contact, String deliveryAddress, List<ItemCreateRequest> items) {
         this.contact = contact;
-        this.storeId = storeId;
-        this.status = status;
-        this.productId = productId;
+        this.deliveryAddress = deliveryAddress;
+        this.items = items;
+    }
+
+    public List<ItemCreateRequest> getItems() {
+        return items;
+    }
+
+    public Orders createOrder(Store store, Customer customer, List<Item> items) {
+        return new Orders(deliveryAddress, contact, Status.WAITING_PAYMENT, store, customer, items);
+    }
+
+
+    static class ItemCreateRequest {
+
+        private final Long productId;
+        private final Integer quantity;
+
+        public ItemCreateRequest(Long productId, Integer quantity) {
+            this.productId = productId;
+            this.quantity = quantity;
+        }
+
+        public Long getProductId() {
+            return productId;
+        }
+
+        public Integer getQuantity() {
+            return quantity;
+        }
     }
 
 }
-

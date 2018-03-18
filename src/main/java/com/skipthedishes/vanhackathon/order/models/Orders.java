@@ -22,8 +22,9 @@ public class Orders implements Serializable {
     @Column(nullable = false)
     private String contact;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String status;
+    private Status status;
 
     @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp
@@ -44,7 +45,7 @@ public class Orders implements Serializable {
     @Deprecated
     protected Orders() {}
 
-    public Orders(String deliveryAddress, String contact, String status, Store store, Customer customer, List<Item> items) {
+    public Orders(String deliveryAddress, String contact, Status status, Store store, Customer customer, List<Item> items) {
         this.deliveryAddress = deliveryAddress;
         this.contact = contact;
         this.status = status;

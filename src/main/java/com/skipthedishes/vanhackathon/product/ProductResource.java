@@ -1,5 +1,6 @@
 package com.skipthedishes.vanhackathon.product;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,9 +11,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/Product")
 public class ProductResource {
 
+    private ProductService service;
+
+    @Autowired
+    public ProductResource(ProductService service) {
+        this.service = service;
+    }
+
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<String> list() {
-        return ResponseEntity.ok().body("Get cousines ");
+    public ResponseEntity<Iterable<Product>> list() {
+        return ResponseEntity.ok().body(service.list());
     }
 
     @RequestMapping(value = "/search/{searchText}", method = RequestMethod.GET)
