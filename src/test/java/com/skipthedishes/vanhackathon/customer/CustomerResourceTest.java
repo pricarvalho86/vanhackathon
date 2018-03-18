@@ -47,11 +47,10 @@ public class CustomerResourceTest {
         Customer customer = mock(Customer.class);
         when(customer.getName()).thenReturn("Priscila Carvalho");
         when(customer.getEmail()).thenReturn("pri.carvalho86@gmail.com");
-        when(customer.getPassword() ).thenReturn("vanhackathon");
         when(customer.getAddress()).thenReturn("15 Paulista Avenue");
         when(customer.getCreation()).thenReturn(new Date());
 
-        when(service.save(any(Customer.class))).thenReturn(customer);
+//        when(service.save(any(Customer.class))).thenReturn(customer);
 
         CustomerCreateRequest customerCreateRequest = new CustomerCreateRequest(
                                                         "pri.carvalho86@gmail.com",

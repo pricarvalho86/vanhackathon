@@ -1,5 +1,8 @@
 package com.skipthedishes.vanhackathon.customer;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 import java.util.Date;
 
 public class CustomerCreateResponse {

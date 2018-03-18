@@ -22,3 +22,4 @@ services:
       - DATABASE_PASSWORD=root
       - DATABASE_NAME=vanhackathon
       - DATABASE_PORT=3306
+    command: bash -c "sleep 10;"

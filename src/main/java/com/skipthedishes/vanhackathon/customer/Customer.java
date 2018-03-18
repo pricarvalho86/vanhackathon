@@ -1,5 +1,6 @@
 package com.skipthedishes.vanhackathon.customer;
 
+import com.skipthedishes.vanhackathon.user.User;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -22,8 +23,8 @@ public class Customer implements Serializable {
     @Column(nullable = false)
     private String address;
 
-    @Column(nullable = false)
-    private String password;
+    @OneToOne(cascade = CascadeType.ALL)
+    private User user;
 
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
@@ -31,13 +32,13 @@ public class Customer implements Serializable {
     private Date creation;
 
     @Deprecated
-    protected Customer(){}
+    Customer(){}
 
     public Customer (String email, String name, String address, String password) {
         this.email = email;
         this.name = name;
         this.address = address;
-        this.password = password;
+        this.user = new User(email, password);
     }
 
     public Long getId() {
@@ -54,10 +55,6 @@ public class Customer implements Serializable {
 
     public String getAddress() {
         return address;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public Date getCreation() {
