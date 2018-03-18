@@ -9,8 +9,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-@Entity
-public class Orders implements Serializable {
+@Entity(name = "orders")
+public class Order implements Serializable {
 
     @Id
     @GeneratedValue
@@ -36,25 +36,22 @@ public class Orders implements Serializable {
     @ManyToOne
     private Customer customer;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="order_item",
-            joinColumns={@JoinColumn(name="order_id",referencedColumnName="id")},
-            inverseJoinColumns={@JoinColumn(name="item_id", referencedColumnName="id")})
-    private List<Item> items;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
+    private List<OrderItem> orderItems;
 
     @Deprecated
-    protected Orders() {}
+    protected Order() {}
 
-    public Orders(String deliveryAddress, String contact, Status status, Store store, Customer customer, List<Item> items) {
+    public Order(String deliveryAddress, String contact, Status status, Store store, Customer customer, List<OrderItem> orderItems) {
         this.deliveryAddress = deliveryAddress;
         this.contact = contact;
         this.status = status;
         this.store = store;
         this.customer = customer;
-        this.items = items;
+        this.orderItems = orderItems;
     }
 
     public Double total() {
-        return items.stream().mapToDouble(item -> item.total()).sum();
+        return orderItems.stream().mapToDouble(orderItem -> orderItem.total()).sum();
     }
 }

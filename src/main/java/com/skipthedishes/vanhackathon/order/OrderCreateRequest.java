@@ -1,33 +1,63 @@
 package com.skipthedishes.vanhackathon.order;
 
 import com.skipthedishes.vanhackathon.customer.Customer;
-import com.skipthedishes.vanhackathon.order.models.Item;
-import com.skipthedishes.vanhackathon.order.models.Orders;
+import com.skipthedishes.vanhackathon.order.models.OrderItem;
+import com.skipthedishes.vanhackathon.order.models.Order;
 import com.skipthedishes.vanhackathon.order.models.Status;
 import com.skipthedishes.vanhackathon.store.Store;
 
 import java.util.List;
 
+/*
+{
+	"id": 0,
+	"date": "2018-03-18T19:30:48.181Z",
+	"customerId": 0,
+	"deliveryAddress": "string",
+	"contact": "string",
+	"storeId": 0,
+	"orderItems": [{
+		"id": 0,
+		"orderId": 0,
+		"productId": 0,
+		"product": {
+			"id": 0,
+			"storeId": 0,
+			"name": "string",
+			"description": "string",
+			"price": 0
+		},
+		"price": 0,
+		"quantity": 0,
+		"total": 0
+	}],
+	"total": 0,
+	"status": "string",
+	"lastUpdate": "2018-03-18T19:30:48.181Z"
+}
+*/
+
 public class OrderCreateRequest {
 
-    private final String contact;
     private final String deliveryAddress;
-    private final List<ItemCreateRequest> items;
+    private final String contact;
+    private final Long storeId;
+    private final List<ItemCreateRequest> orderItems;
 
-    public OrderCreateRequest(String contact, String deliveryAddress, List<ItemCreateRequest> items) {
-        this.contact = contact;
+    public OrderCreateRequest(String deliveryAddress, String contact, Long storeId, List<ItemCreateRequest> orderItems) {
         this.deliveryAddress = deliveryAddress;
-        this.items = items;
+        this.contact = contact;
+        this.storeId = storeId;
+        this.orderItems = orderItems;
     }
 
-    public List<ItemCreateRequest> getItems() {
-        return items;
+    public Order create(Customer customer, Store store, List<OrderItem> orderItems) {
+        return new Order(deliveryAddress, contact, Status.WAITING_PAYMENT, store, customer, orderItems);
     }
 
-    public Orders createOrder(Store store, Customer customer, List<Item> items) {
-        return new Orders(deliveryAddress, contact, Status.WAITING_PAYMENT, store, customer, items);
+    public List<ItemCreateRequest> getOrderItems() {
+        return orderItems;
     }
-
 
     static class ItemCreateRequest {
 

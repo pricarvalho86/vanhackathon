@@ -37,4 +37,8 @@ public class Product implements Serializable {
     public Double price() {
         return this.price;
     }
+
+    public Store getStore() {
+        return store;
+    }
 }

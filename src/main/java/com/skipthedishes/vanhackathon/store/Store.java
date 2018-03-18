@@ -16,10 +16,6 @@ public class Store implements Serializable {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "productId",  referencedColumnName = "id")
-    private List<Product> products;
-
     @Deprecated
     protected Store() {}
 
