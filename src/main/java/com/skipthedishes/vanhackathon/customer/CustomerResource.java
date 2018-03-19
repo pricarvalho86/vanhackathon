@@ -25,10 +25,4 @@ public class CustomerResource {
         return  CustomerCreateResponse.from(customer);
     }
 
-//    @RequestMapping(value = "/auth", method = RequestMethod.POST)
-//    public @ResponseBody CustomerAuthenticateResponse authenticate(@RequestBody CustomerAuthenticateRequest customerAuthenticateRequest) {
-//        Optional<String> token = service.authenticate(customerAuthenticateRequest);
-//        Optional<CustomerAuthenticateResponse> customerAuthResponse = token.map(CustomerAuthenticateResponse::new);
-//        return customerAuthResponse.orElseThrow(() -> new UnauthorizedException());
-//    }
 }
