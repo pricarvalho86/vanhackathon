@@ -29,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        UserDetails user = User.withUsername("admin").password("{noop}password").roles("USER").build();
+        UserDetails user = User.withUsername("admin").password("{bcrypt}password").roles("USER").build();
         auth.inMemoryAuthentication().withUser(user);
     }
 }
