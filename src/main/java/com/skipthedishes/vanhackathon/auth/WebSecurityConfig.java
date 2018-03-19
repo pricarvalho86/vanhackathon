@@ -17,19 +17,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable().authorizeRequests()
-                .antMatchers("/api/v1/Customer").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/v1/Customer/auth").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .addFilterBefore(new JWTLoginFilter("/api/v1/Customer/auth", authenticationManager()),
-                        UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new JWTAuthenticationFilter(),
-                        UsernamePasswordAuthenticationFilter.class);
+            .antMatchers(HttpMethod.POST,"/api/v1/Customer").permitAll()
+            .antMatchers(HttpMethod.POST, "/api/v1/Customer/auth").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .addFilterBefore(new JWTLoginFilter("/api/v1/Customer/auth", authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        UserDetails user = User.withUsername("admin").password("{bcrypt}password").roles("USER").build();
+        UserDetails user = User.withUsername("admin").password("{noop}password").roles("USER").build();
         auth.inMemoryAuthentication().withUser(user);
     }
 }

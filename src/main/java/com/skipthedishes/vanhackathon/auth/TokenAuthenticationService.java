@@ -2,6 +2,7 @@ package com.skipthedishes.vanhackathon.auth;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,20 +30,17 @@ public class TokenAuthenticationService {
         response.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + JWT);
     }
 
-    static Authentication getAuthentication(HttpServletRequest request) {
-        String token = request.getHeader(HEADER_STRING);
-        if (token != null) {
-            String user = Jwts.parser()
+    static Optional<Authentication> getAuthentication(HttpServletRequest request) {
+        Optional<String> tokenHeaderRequest = Optional.ofNullable(request.getHeader(HEADER_STRING));
+        return tokenHeaderRequest.flatMap(token -> {
+            Optional<String> user = Optional.ofNullable(Jwts.parser()
                     .setSigningKey(SECRET)
                     .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
                     .getBody()
-                    .getSubject();
+                    .getSubject());
 
-            if (user != null) {
-                return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
-            }
-        }
-        return null;
+            return user.map(u -> new UsernamePasswordAuthenticationToken(u, null, Collections.emptyList()));
+        });
     }
 
 }
