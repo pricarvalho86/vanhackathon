@@ -6,6 +6,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -15,20 +17,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/v1/Customer").permitAll()
-                .antMatchers(HttpMethod.POST, "/auth").permitAll()
-                .anyRequest()
-                .authenticated()
+                .antMatchers("/api/v1/Customer").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/v1/Customer/auth").permitAll()
+                .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(new JWTLoginFilter("/auth", authenticationManager()), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JWTLoginFilter("/api/v1/Customer/auth", authenticationManager()),
+                        UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JWTAuthenticationFilter(),
+                        UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("pri.carvalho86@gmail.com")
-                .password("vanhackathon")
-                .roles("ADMIN");
+        UserDetails user = User.withUsername("admin").password("{noop}password").roles("USER").build();
+        auth.inMemoryAuthentication().withUser(user);
     }
 }
