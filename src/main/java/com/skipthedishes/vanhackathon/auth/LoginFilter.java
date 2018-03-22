@@ -1,6 +1,7 @@
 package com.skipthedishes.vanhackathon.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,9 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
 
-public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
+public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 
-    protected JWTLoginFilter(String url, AuthenticationManager authManager) {
+    protected LoginFilter(String url, AuthenticationManager authManager) {
         super(new AntPathRequestMatcher(url));
         setAuthenticationManager(authManager);
     }
@@ -28,7 +29,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
         AccountCredentials credentials = new ObjectMapper()
                 .readValue(request.getInputStream(), AccountCredentials.class);
 
-        return getAuthenticationManager().authenticate(
+        return super.getAuthenticationManager().authenticate(
                 new UsernamePasswordAuthenticationToken(
                         credentials.getUsername(),
                         credentials.getPassword(),

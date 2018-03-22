@@ -12,15 +12,16 @@ import org.springframework.security.core.Authentication;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.stereotype.Service;
 
 public class TokenAuthenticationService {
 
-    static final long EXPIRATION_TIME = 860_000_000; // EXPIRATION_TIME = 10 dias
-    static final String SECRET = "MySecret";
-    static final String TOKEN_PREFIX = "Bearer";
-    static final String HEADER_STRING = "Authorization";
+    private static final long EXPIRATION_TIME = 860_000_000; //TODO ADD TO application.properties
+    private static final String SECRET = "vanhackathon"; //TODO ADD TO application.properties
+    private static final String TOKEN_PREFIX = "Bearer";
+    private static final String HEADER_STRING = "Authorization";
 
-    static void addAuthentication(HttpServletResponse response, String username) {
+    public static void addAuthentication(HttpServletResponse response, String username) {
         String JWT = Jwts.builder()
                 .setSubject(username)
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
@@ -30,7 +31,7 @@ public class TokenAuthenticationService {
         response.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + JWT);
     }
 
-    static Optional<Authentication> getAuthentication(HttpServletRequest request) {
+    public static Optional<Authentication> getAuthentication(HttpServletRequest request) {
         Optional<String> tokenHeaderRequest = Optional.ofNullable(request.getHeader(HEADER_STRING));
         return tokenHeaderRequest.flatMap(token -> {
             Optional<String> user = Optional.ofNullable(Jwts.parser()
