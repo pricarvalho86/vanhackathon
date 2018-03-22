@@ -52,11 +52,12 @@ public class CustomerResourceTest {
 
 //        when(service.save(any(Customer.class))).thenReturn(customer);
 
-        CustomerCreateRequest customerCreateRequest = new CustomerCreateRequest(
-                                                        "pri.carvalho86@gmail.com",
-                                                        "Priscila Carvalho",
-                                                        "pri.carvalho86@gmail.com",
-                                                        "vanhackaton");
+        CustomerCreateRequest customerCreateRequest = null;
+//                new CustomerCreateRequest(
+//                                                        "pri.carvalho86@gmail.com",
+//                                                        "Priscila Carvalho",
+//                                                        "pri.carvalho86@gmail.com",
+//                                                        "vanhackaton");
         String jsonRequest = gson.toJson(customerCreateRequest);
         System.out.println(jsonRequest);
         this.mockMvc.perform(
