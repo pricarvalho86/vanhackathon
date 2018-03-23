@@ -1,11 +1,9 @@
 package com.skipthedishes.vanhackathon.product;
 
+import com.skipthedishes.vanhackathon.store.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/Product")
@@ -19,18 +17,19 @@ public class ProductResource {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Iterable<Product>> list() {
-        return ResponseEntity.ok().body(service.list());
-    }
-
-    @RequestMapping(value = "/search/{searchText}", method = RequestMethod.GET)
-    public ResponseEntity<String> search(@PathVariable("searchText") String searchText) {
-        return ResponseEntity.ok().body("Searching " +searchText );
+    public @ResponseBody Iterable<Product> list() {
+        return service.list();
     }
 
     @RequestMapping(value = "/{productId}", method = RequestMethod.GET)
-    public ResponseEntity<String> stores(@PathVariable("productId") String productId) {
-        return ResponseEntity.ok().body("Product from "+productId);
+    public Product get(@PathVariable("productId") Long productId) {
+        return service.findById(productId).get();
+    }
+
+    //TODO SOLR/ELASTICSEARCH ?
+    @RequestMapping(value = "/search/{searchText}", method = RequestMethod.GET)
+    public ResponseEntity<String> search(@PathVariable("searchText") String searchText) {
+        return ResponseEntity.ok().body("Searching " +searchText );
     }
 
 }

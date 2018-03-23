@@ -3,6 +3,8 @@ package com.skipthedishes.vanhackathon.product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ProductService {
 
@@ -17,4 +19,7 @@ public class ProductService {
         return products.findAll();
     }
 
+    public Optional<Product> findById(Long productId) {
+        return products.findById(productId);
+    }
 }

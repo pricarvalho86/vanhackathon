@@ -25,7 +25,7 @@ public class Product implements Serializable {
     private Store store;
 
     @Deprecated
-    protected Product() {}
+    Product() {}
 
     public Product (String name, String description, Double price, Store store) {
         this.name = name;
@@ -34,11 +34,43 @@ public class Product implements Serializable {
         this.store = store;
     }
 
-    public Double price() {
-        return this.price;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public Store getStore() {
         return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
     }
 }

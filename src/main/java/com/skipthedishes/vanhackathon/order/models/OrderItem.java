@@ -29,7 +29,7 @@ public class OrderItem implements Serializable {
     protected OrderItem() {}
 
     public OrderItem(Integer quantity, Product product) {
-        this.price = product.price();
+        this.price = product.getPrice();
         this.quantity = quantity;
         this.product = product;
     }
