@@ -34,15 +34,18 @@ public class TokenAuthenticationService {
     public static Optional<Authentication> getAuthentication(HttpServletRequest request) {
         Optional<String> tokenHeaderRequest = Optional.ofNullable(request.getHeader(HEADER_STRING));
         return tokenHeaderRequest.flatMap(token -> {
-            Optional<String> user = Optional.ofNullable(
-                    Jwts.parser()
-                    .setSigningKey(SECRET)
-                    .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
-                    .getBody()
-                    .getSubject());
-
+            Optional<String> user = recoverUserLoggedInByToken(token);
             return user.map(u -> new UsernamePasswordAuthenticationToken(u, null, Collections.emptyList()));
         });
+    }
+
+    public static Optional<String> recoverUserLoggedInByToken(String token) {
+        return Optional.ofNullable(
+                        Jwts.parser()
+                        .setSigningKey(SECRET)
+                        .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+                        .getBody()
+                        .getSubject());
     }
 
 }

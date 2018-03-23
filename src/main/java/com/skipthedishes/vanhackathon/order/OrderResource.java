@@ -17,14 +17,14 @@ public class OrderResource {
     }
 
     @RequestMapping(value = "/{orderId}", method = RequestMethod.GET)
-    public @ResponseBody String get(@PathVariable String orderId) {
-        return "Get orders";
+    public @ResponseBody Order get(@PathVariable Long orderId) {
+        return service.findById(orderId).get();
     }
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public @ResponseBody Order register(@RequestBody OrderCreateRequest orderRequest, @RequestHeader("Authorization") String encoding) {
-        return service.create(orderRequest);
+    public @ResponseBody Order register(@RequestBody OrderCreateRequest orderRequest, @RequestHeader("Authorization") String token) {
+        return service.create(orderRequest, token);
     }
 
     @RequestMapping(value = "/customer", method = RequestMethod.GET)

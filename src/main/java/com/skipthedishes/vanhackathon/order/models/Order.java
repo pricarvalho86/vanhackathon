@@ -36,7 +36,7 @@ public class Order implements Serializable {
     @ManyToOne(optional = false)
     private Customer customer;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<OrderItem> orderItems;
 
     @Deprecated
@@ -51,7 +51,39 @@ public class Order implements Serializable {
         this.orderItems = orderItems;
     }
 
-    public Double total() {
+    public Double getTotal() {
         return orderItems.stream().mapToDouble(orderItem -> orderItem.total()).sum();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public Date getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
     }
 }

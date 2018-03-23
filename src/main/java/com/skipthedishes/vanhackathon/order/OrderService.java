@@ -1,5 +1,6 @@
 package com.skipthedishes.vanhackathon.order;
 
+import com.skipthedishes.vanhackathon.auth.TokenAuthenticationService;
 import com.skipthedishes.vanhackathon.customer.Customer;
 import com.skipthedishes.vanhackathon.customer.CustomerRepository;
 import com.skipthedishes.vanhackathon.order.models.OrderItem;
@@ -14,7 +15,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class OrderService {
@@ -31,8 +31,9 @@ public class OrderService {
     }
 
     @Transactional
-    public Order create(OrderCreateRequest orderRequest) {
-        Optional<Customer> customerFound = customers.findFirstByEmailEquals("pri.carvalho86@gmail.com");
+    public Order create(OrderCreateRequest orderRequest, String token) {
+        String userLoggedIn = TokenAuthenticationService.recoverUserLoggedInByToken(token).orElse("");
+        Optional<Customer> customerFound = customers.findFirstByEmailEquals(userLoggedIn);
 
         Optional<Order> savedOrder = customerFound.map(customer -> {
             List<OrderItem> items = orderRequest.getOrderItems().stream().map(orderItem -> {
@@ -45,5 +46,9 @@ public class OrderService {
         }).map(order -> orders.save(order));
 
         return savedOrder.get();
+    }
+
+    public Optional<Order> findById(Long orderId) {
+        return orders.findById(orderId);
     }
 }
