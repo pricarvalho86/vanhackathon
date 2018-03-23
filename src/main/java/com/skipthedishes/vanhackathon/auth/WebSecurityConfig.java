@@ -34,10 +34,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(service).passwordEncoder(new BCryptPasswordEncoder());
-
-//
-//        UserDetails user = service.loadUserByUsername("{noop}password");
-////        UserDetails user = User.withUsername("admin").password("{noop}password").roles("USER").build();
-//        auth.inMemoryAuthentication().withUser(user);
     }
 }
