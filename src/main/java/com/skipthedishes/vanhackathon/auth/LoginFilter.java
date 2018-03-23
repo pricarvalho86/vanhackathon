@@ -1,7 +1,6 @@
 package com.skipthedishes.vanhackathon.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -45,7 +44,7 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
             FilterChain filterChain,
             Authentication auth) {
 
-        TokenAuthenticationService.addAuthentication(response, auth.getName());
+        TokenAuthenticationService.addHeaderAuthentication(response, auth.getName());
     }
 
 }

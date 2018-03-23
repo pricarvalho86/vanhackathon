@@ -23,8 +23,7 @@ public class OrderResource {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public @ResponseBody
-    Order register(@RequestBody OrderCreateRequest orderRequest) {
+    public @ResponseBody Order register(@RequestBody OrderCreateRequest orderRequest, @RequestHeader("Authorization") String encoding) {
         return service.create(orderRequest);
     }
 

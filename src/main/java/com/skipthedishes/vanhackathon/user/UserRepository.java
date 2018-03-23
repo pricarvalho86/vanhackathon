@@ -6,6 +6,6 @@ import java.util.Optional;
 
 public interface UserRepository extends CrudRepository<User, Long> {
 
-    Optional<User> findFirstByEmailEquals(String email);
+    Optional<User> findFirstByUsernameEquals(String username);
 
 }

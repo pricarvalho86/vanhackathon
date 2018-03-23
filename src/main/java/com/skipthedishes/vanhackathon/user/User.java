@@ -16,7 +16,7 @@ public class User {
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
 
-    private String email;
+    private String username;
 
     private String password;
 
@@ -33,8 +33,8 @@ public class User {
     @Deprecated
     User() {}
 
-    public User(String email, String password) {
-        this.email = email.toLowerCase();
+    public User(String username, String password) {
+        this.username = username.toLowerCase();
         this.password = password;
     }
 
@@ -47,5 +47,8 @@ public class User {
         return new BCryptPasswordEncoder().matches(password, this.password);
     }
 
+    public String getPassword() {
+        return password;
+    }
 }
 

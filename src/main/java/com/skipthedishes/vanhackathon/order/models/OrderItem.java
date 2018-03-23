@@ -22,7 +22,7 @@ public class OrderItem implements Serializable {
     @OneToOne
     private Product product;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Order order;
 
     @Deprecated
@@ -40,5 +40,9 @@ public class OrderItem implements Serializable {
 
     public Store getStore() {
         return this.product.getStore();
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }

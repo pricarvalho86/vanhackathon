@@ -1,5 +1,8 @@
 package com.skipthedishes.vanhackathon.auth;
 
+import com.skipthedishes.vanhackathon.user.UserRepository;
+import com.skipthedishes.vanhackathon.user.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -8,11 +11,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+
+    @Autowired
+    private UserService service;
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -27,7 +35,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        UserDetails user = User.withUsername("admin").password("{noop}password").roles("USER").build();
-        auth.inMemoryAuthentication().withUser(user);
+        auth.userDetailsService(service).passwordEncoder(new BCryptPasswordEncoder());
+
+//
+//        UserDetails user = service.loadUserByUsername("{noop}password");
+////        UserDetails user = User.withUsername("admin").password("{noop}password").roles("USER").build();
+//        auth.inMemoryAuthentication().withUser(user);
     }
 }

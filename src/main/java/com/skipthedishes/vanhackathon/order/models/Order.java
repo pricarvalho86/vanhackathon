@@ -33,7 +33,7 @@ public class Order implements Serializable {
     @ManyToOne
     private Store store;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Customer customer;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")

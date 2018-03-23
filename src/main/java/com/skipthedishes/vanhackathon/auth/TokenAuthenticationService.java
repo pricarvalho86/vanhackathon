@@ -21,7 +21,7 @@ public class TokenAuthenticationService {
     private static final String TOKEN_PREFIX = "Bearer";
     private static final String HEADER_STRING = "Authorization";
 
-    public static void addAuthentication(HttpServletResponse response, String username) {
+    public static void addHeaderAuthentication(HttpServletResponse response, String username) {
         String JWT = Jwts.builder()
                 .setSubject(username)
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
@@ -34,7 +34,8 @@ public class TokenAuthenticationService {
     public static Optional<Authentication> getAuthentication(HttpServletRequest request) {
         Optional<String> tokenHeaderRequest = Optional.ofNullable(request.getHeader(HEADER_STRING));
         return tokenHeaderRequest.flatMap(token -> {
-            Optional<String> user = Optional.ofNullable(Jwts.parser()
+            Optional<String> user = Optional.ofNullable(
+                    Jwts.parser()
                     .setSigningKey(SECRET)
                     .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
                     .getBody()
